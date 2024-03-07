@@ -15,3 +15,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  liquibase:
+    change-log: classpath:liquibase/db.changelog.yaml
+    enabled: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
