@@ -1,6 +1,6 @@
-package isthatkirill.vkproject.repository;
+package isthatkirill.vkproject.user.repository;
 
-import isthatkirill.vkproject.model.AppUser;
+import isthatkirill.vkproject.user.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +14,7 @@ import java.util.Optional;
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 
     Optional<AppUser> findAppUserByUsername(String username);
+
+    boolean existsAppUserByUsername(String username);
 
 }

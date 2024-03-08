@@ -1,11 +1,10 @@
-package isthatkirill.vkproject.model;
+package isthatkirill.vkproject.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Kirill Emelyanov
