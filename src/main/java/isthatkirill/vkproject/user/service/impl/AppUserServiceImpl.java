@@ -12,6 +12,7 @@ import isthatkirill.vkproject.user.service.AppUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class AppUserServiceImpl implements AppUserService {
     private final AppUserMapper userMapper;
 
     @Override
+    @Transactional
     public AppUserDtoResponse register(AppUserDtoRequest userDtoRequest) {
         checkIfUserExists(userDtoRequest.getUsername());
         AppUser appUser = userMapper.toAppUser(userDtoRequest);
@@ -37,6 +39,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
+    @Transactional
     public AppUserDtoResponse changeUserRoles(Long userId, List<Role> roles) {
         AppUser appUser = checkIfUserExistsAndGet(userId);
         appUser.setRoles(roles);
