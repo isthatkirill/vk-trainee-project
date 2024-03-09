@@ -32,6 +32,7 @@ public class Request {
     @JoinColumn(name = "app_user_id", referencedColumnName = "id")
     AppUser creator;
 
+    String method;
     String path;
     boolean isAllowed;
 

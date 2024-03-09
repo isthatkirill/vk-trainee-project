@@ -33,6 +33,7 @@ public class RequestServiceImpl implements RequestService {
         return Request.builder()
                 .path(httpRequest.getRequestURI())
                 .isAllowed(isAllowed)
+                .method(httpRequest.getMethod())
                 .creator(appUser)
                 .build();
     }
