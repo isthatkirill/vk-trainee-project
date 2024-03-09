@@ -2,15 +2,10 @@ package isthatkirill.vkproject.api.client;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Mono;
-
-import java.util.Map;
 
 /**
  * @author Kirill Emelyanov
@@ -23,63 +18,67 @@ public class RequestClient {
 
     private final WebClient webClient;
 
-    public Mono<Object> get(String path, Map<String, String> queryParams) {
+    @Cacheable(value = "RequestClient::get", key = "#path")
+    public String get(String path) {
         return webClient.get()
-                .uri(buildURI(path, queryParams))
+                .uri(path)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(Object.class);
+                .bodyToMono(String.class)
+                .block();
     }
 
-    public Mono<Object> post(String path, Object body) {
+    /*
+        Кэширование остальных HTTP-методов небезопасно.
+
+        Обновлять кэш с помощью @Caching и @CachePut не имеет смысла, т.к.
+        https://jsonplaceholder.typicode.com не хранит наших изменений.
+
+        Аналогично, использование @CacheEvict не имеет смысла по тем же причинам.
+     */
+
+    public String post(String path, Object body) {
         return webClient.post()
                 .uri(path)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(body)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(Object.class);
+                .bodyToMono(String.class)
+                .block();
     }
 
-    public Mono<Object> put(String path, Object body) {
+
+
+    public String put(String path, Object body) {
         return webClient.put()
                 .uri(path)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(body)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(Object.class);
+                .bodyToMono(String.class)
+                .block();
     }
 
-    public Mono<Object> patch(String path, Object body) {
+    public String patch(String path, Object body) {
         return webClient.patch()
                 .uri(path)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(body)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(Object.class);
+                .bodyToMono(String.class)
+                .block();
     }
 
-    public Mono<Object> delete(String path) {
+    public String delete(String path) {
         return webClient.delete()
                 .uri(path)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(Object.class);
-    }
-
-    private MultiValueMap<String, String> toMultiValueMap(Map<String, String> queryParams) {
-        MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
-        multiValueMap.setAll(queryParams);
-        return multiValueMap;
-    }
-
-    private String buildURI(String path, Map<String, String> queryParams) {
-        return UriComponentsBuilder.fromPath(path)
-                .queryParams(toMultiValueMap(queryParams))
-                .build()
-                .toString();
+                .bodyToMono(String.class)
+                .block();
     }
 
 }

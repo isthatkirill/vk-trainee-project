@@ -9,6 +9,7 @@ import isthatkirill.vkproject.user.repository.AppUserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Kirill Emelyanov
@@ -23,6 +24,7 @@ public class RequestServiceImpl implements RequestService {
     private final RequestRepository requestRepository;
 
     @Override
+    @Transactional
     public void saveRequest(HttpServletRequest request, boolean isAllowed, String username) {
         requestRepository.save(buildRequest(request, isAllowed, username));
     }

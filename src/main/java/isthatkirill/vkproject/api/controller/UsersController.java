@@ -6,16 +6,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
 import java.util.Map;
+
+import static isthatkirill.vkproject.util.PathBuilder.*;
 
 /**
  * @author Kirill Emelyanov
  */
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class UsersController {
 
@@ -28,9 +29,9 @@ public class UsersController {
      */
     @GetMapping(value = {"", "/{userId}", "/{userId}/albums", "/{userId}/todos", "/{userId}/posts"})
     @PreAuthorize("@userSecurityExpression.checkUsersAccessAndSave(#httpServletRequest)")
-    public Mono<Object> get(HttpServletRequest httpServletRequest,
-                            @RequestParam(required = false) Map<String, String> queryParams) {
-        return requestClient.get(extractPath(httpServletRequest), queryParams);
+    public String get(HttpServletRequest httpServletRequest,
+                      @RequestParam(required = false) Map<String, String> queryParams) {
+        return requestClient.get(buildURI(httpServletRequest, queryParams));
     }
 
     /**
@@ -40,8 +41,8 @@ public class UsersController {
      */
     @PostMapping(value = {"", "/{userId}/albums", "/{userId}/todos", "/{userId}/posts"})
     @PreAuthorize("@userSecurityExpression.checkUsersAccessAndSave(#httpServletRequest)")
-    public Mono<Object> post(HttpServletRequest httpServletRequest, @RequestBody Object body) {
-        return requestClient.post(extractPath(httpServletRequest), body);
+    public String post(HttpServletRequest httpServletRequest, @RequestBody Object body) {
+        return requestClient.post(buildURI(httpServletRequest), body);
     }
 
     /**
@@ -51,8 +52,8 @@ public class UsersController {
      */
     @PutMapping(value = {"/{userId}"})
     @PreAuthorize("@userSecurityExpression.checkUsersAccessAndSave(#httpServletRequest)")
-    public Mono<Object> put(HttpServletRequest httpServletRequest, @RequestBody Object body) {
-        return requestClient.put(extractPath(httpServletRequest), body);
+    public String put(HttpServletRequest httpServletRequest, @RequestBody Object body) {
+        return requestClient.put(buildURI(httpServletRequest), body);
     }
 
     /**
@@ -62,8 +63,8 @@ public class UsersController {
      */
     @PatchMapping(value = {"/{userId}"})
     @PreAuthorize("@userSecurityExpression.checkUsersAccessAndSave(#httpServletRequest)")
-    public Mono<Object> patch(HttpServletRequest httpServletRequest, @RequestBody Object body) {
-        return requestClient.patch(extractPath(httpServletRequest), body);
+    public String patch(HttpServletRequest httpServletRequest, @RequestBody Object body) {
+        return requestClient.patch(buildURI(httpServletRequest), body);
     }
 
     /**
@@ -73,14 +74,8 @@ public class UsersController {
      */
     @DeleteMapping(value = {"/{userId}"})
     @PreAuthorize("@userSecurityExpression.checkUsersAccessAndSave(#httpServletRequest)")
-    public Mono<Object> delete(HttpServletRequest httpServletRequest) {
-        return requestClient.delete(extractPath(httpServletRequest));
+    public String delete(HttpServletRequest httpServletRequest) {
+        return requestClient.delete(buildURI(httpServletRequest));
     }
-
-    private String extractPath(HttpServletRequest httpServletRequest) {
-        return httpServletRequest.getRequestURI().substring(4);
-    }
-
-
 
 }
