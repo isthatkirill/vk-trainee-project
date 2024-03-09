@@ -1,16 +1,17 @@
 package isthatkirill.vkproject.api.controller;
 
+import isthatkirill.vkproject.api.client.RequestClient;
 import isthatkirill.vkproject.auth.UserSecurityExpression;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.view.RedirectView;
+import reactor.core.publisher.Mono;
 
 /**
  * @author Kirill Emelyanov
@@ -21,15 +22,12 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequiredArgsConstructor
 public class UsersController {
 
-    private final UserSecurityExpression userSecurityExpression;
+    private final RequestClient requestClient;
 
-    @Value("${json.placeholder.url}")
-    private String url;
-
-    @GetMapping({"/{userId}", ""})
+    @GetMapping(value = {"/{userId}", ""}, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("@userSecurityExpression.checkUsersAccessAndSave(#httpServletRequest)")
-    public RedirectView getUsers(HttpServletRequest httpServletRequest, @PathVariable (required = false) Long userId) {
-        return new RedirectView(url + extractPath(httpServletRequest));
+    public Mono<String> getUsers(HttpServletRequest httpServletRequest, @PathVariable (required = false) Long userId) {
+        return requestClient.get(extractPath(httpServletRequest));
     }
 
     private String extractPath(HttpServletRequest httpServletRequest) {
