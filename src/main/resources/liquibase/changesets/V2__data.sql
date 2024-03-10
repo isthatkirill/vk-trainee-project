@@ -7,6 +7,9 @@ values ('admin', '$2a$10$TLtccjJ3WncyxfPzYfYeh.6sHOfepzLeu5JCd9lajRphX/B.yC6B2')
 
 insert into user_roles (app_user_id, role)
 values (1, 'ROLE_ADMIN'),
-       (2, 'ROLE_POSTS'),
-       (2, 'ROLE_USERS'),
-       (3, 'ROLE_ALBUMS');
+       (2, 'ROLE_POSTS_VIEWER'),
+       (2, 'ROLE_POSTS_EDITOR'),
+       (2, 'ROLE_USERS_VIEWER'),
+       (2, 'ROLE_USERS_EDITOR'),
+       (3, 'ROLE_ALBUMS_VIEWER'),
+       (3, 'ROLE_ALBUMS_EDITOR');

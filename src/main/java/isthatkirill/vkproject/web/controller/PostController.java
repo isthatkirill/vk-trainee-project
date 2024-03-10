@@ -20,7 +20,6 @@ import static isthatkirill.vkproject.util.PathBuilder.buildURI;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/posts", produces = MediaType.APPLICATION_JSON_VALUE)
-@PreAuthorize("@userSecurityExpression.checkAccessToPostsAndSave(#httpServletRequest)")
 public class PostController {
 
     private final RequestClient requestClient;
@@ -31,6 +30,7 @@ public class PostController {
      * Например: /posts, /posts/1, /posts?userId=1, /posts/1/comments, /posts/1/comments?id=3
      */
     @GetMapping(value = {"", "/{postId}", "/{postId}/comments"})
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_POSTS_VIEWER')")
     public ResponseEntity<String> get(HttpServletRequest httpServletRequest,
                                      @RequestParam(required = false) Map<String, String> queryParams) {
         return ResponseEntity.ok(
@@ -44,6 +44,7 @@ public class PostController {
      * Например: /posts, /posts/1/comments
      */
     @PostMapping(value = {"", "/{postId}/comments"})
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_POSTS_EDITOR')")
     public ResponseEntity<String> post(HttpServletRequest httpServletRequest, @RequestBody Object body) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 requestClient.post(buildURI(httpServletRequest), body)
@@ -56,6 +57,7 @@ public class PostController {
      * Например: /posts/1
      */
     @PutMapping(value = "/{postId}")
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_POSTS_EDITOR')")
     public ResponseEntity<String> put(HttpServletRequest httpServletRequest, @RequestBody Object body) {
         return ResponseEntity.ok(
                 requestClient.put(buildURI(httpServletRequest), body)
@@ -68,6 +70,7 @@ public class PostController {
      * Например: /posts/1
      */
     @PatchMapping(value = "/{postId}")
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_POSTS_EDITOR')")
     public ResponseEntity<String> patch(HttpServletRequest httpServletRequest, @RequestBody Object body) {
         return ResponseEntity.ok(
                 requestClient.patch(buildURI(httpServletRequest), body)
@@ -80,6 +83,7 @@ public class PostController {
      * Например: /posts/1
      */
     @DeleteMapping(value = "/{postId}")
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_POSTS_EDITOR')")
     public ResponseEntity<Void> delete(HttpServletRequest httpServletRequest) {
         requestClient.delete(buildURI(httpServletRequest));
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

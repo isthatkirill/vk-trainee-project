@@ -20,7 +20,6 @@ import static isthatkirill.vkproject.util.PathBuilder.buildURI;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/albums", produces = MediaType.APPLICATION_JSON_VALUE)
-@PreAuthorize("@userSecurityExpression.checkAccessToAlbumsAndSave(#httpServletRequest)")
 public class AlbumController {
 
     private final RequestClient requestClient;
@@ -31,6 +30,7 @@ public class AlbumController {
      * Например: /albums, /albums/1, /albums?userId=1, /albums/1/photos?id=7
      */
     @GetMapping(value = {"", "/{albumId}", "/{albumId}/photos"})
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_ALBUMS_VIEWER')")
     public ResponseEntity<String> get(HttpServletRequest httpServletRequest,
                                      @RequestParam(required = false) Map<String, String> queryParams) {
         return ResponseEntity.ok(
@@ -44,6 +44,7 @@ public class AlbumController {
      * Например: /albums, /albums/1/photos
      */
     @PostMapping(value = {"", "/{albumId}/photos"})
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_ALBUMS_EDITOR')")
     public ResponseEntity<String> post(HttpServletRequest httpServletRequest, @RequestBody Object body) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 requestClient.post(buildURI(httpServletRequest), body)
@@ -56,6 +57,7 @@ public class AlbumController {
      * Например: /albums/1
      */
     @PutMapping(value = "/{albumId}")
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_ALBUMS_EDITOR')")
     public ResponseEntity<String> put(HttpServletRequest httpServletRequest, @RequestBody Object body) {
         return ResponseEntity.ok(
                 requestClient.put(buildURI(httpServletRequest), body)
@@ -68,6 +70,7 @@ public class AlbumController {
      * Например: /albums/1
      */
     @PatchMapping(value = "/{albumId}")
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_ALBUMS_EDITOR')")
     public ResponseEntity<String> patch(HttpServletRequest httpServletRequest, @RequestBody Object body) {
         return ResponseEntity.ok(
                 requestClient.patch(buildURI(httpServletRequest), body)
@@ -80,6 +83,7 @@ public class AlbumController {
      * Например: /albums/1
      */
     @DeleteMapping(value = {"/{albumId}", "/{albumId}/photos/{photoId}"})
+    @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_ALBUMS_EDITOR')")
     public ResponseEntity<Void> delete(HttpServletRequest httpServletRequest) {
         requestClient.delete(buildURI(httpServletRequest));
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

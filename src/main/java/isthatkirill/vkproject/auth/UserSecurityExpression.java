@@ -20,23 +20,10 @@ public class UserSecurityExpression {
 
     private final RequestService requestService;
 
-    public boolean checkAccessToUsersAndSave(HttpServletRequest httpServletRequest) {
+    public boolean checkPermissions(HttpServletRequest httpServletRequest, String roleStr) {
+        Role role = Role.valueOf(roleStr);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAllowed = isHaveGivenRole(authentication, Role.ROLE_USERS) || isHaveGivenRole(authentication, Role.ROLE_ADMIN);
-        requestService.saveRequest(httpServletRequest, isAllowed, extractUsername(authentication));
-        return isAllowed;
-    }
-
-    public boolean checkAccessToAlbumsAndSave(HttpServletRequest httpServletRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAllowed = isHaveGivenRole(authentication, Role.ROLE_ALBUMS) || isHaveGivenRole(authentication, Role.ROLE_ADMIN);
-        requestService.saveRequest(httpServletRequest, isAllowed, extractUsername(authentication));
-        return isAllowed;
-    }
-
-    public boolean checkAccessToPostsAndSave(HttpServletRequest httpServletRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAllowed = isHaveGivenRole(authentication, Role.ROLE_POSTS) || isHaveGivenRole(authentication, Role.ROLE_ADMIN);
+        boolean isAllowed = isHaveGivenRole(authentication, role) || isHaveGivenRole(authentication, Role.ROLE_ADMIN);
         requestService.saveRequest(httpServletRequest, isAllowed, extractUsername(authentication));
         return isAllowed;
     }
