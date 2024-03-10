@@ -19,18 +19,18 @@ import static isthatkirill.vkproject.util.PathBuilder.buildURI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/albums", produces = MediaType.APPLICATION_JSON_VALUE)
-@PreAuthorize("@userSecurityExpression.checkAccessToAlbumsAndSave(#httpServletRequest)")
-public class AlbumController {
+@RequestMapping(value = "/api/posts", produces = MediaType.APPLICATION_JSON_VALUE)
+@PreAuthorize("@userSecurityExpression.checkAccessToPostsAndSave(#httpServletRequest)")
+public class PostController {
 
     private final RequestClient requestClient;
 
     /**
-     * Обработка GET-запросов к /albums/**
+     * Обработка GET-запросов к /posts/**
      * Поддерживаются всевозможные запросы, представленные на jsonplaceholder.typicode.com/
-     * Например: /albums, /albums/1, /albums?userId=1, /albums/1/photos?id=7
+     * Например: /posts, /posts/1, /posts?userId=1, /posts/1/comments, /posts/1/comments?id=3
      */
-    @GetMapping(value = {"", "/{albumId}", "/{albumId}/photos"})
+    @GetMapping(value = {"", "/{postId}", "/{postId}/comments"})
     public ResponseEntity<String> get(HttpServletRequest httpServletRequest,
                                      @RequestParam(required = false) Map<String, String> queryParams) {
         return ResponseEntity.ok(
@@ -39,11 +39,11 @@ public class AlbumController {
     }
 
     /**
-     * Обработка POST-запросов к /albums/**
+     * Обработка POST-запросов к /posts/**
      * Поддерживаются всевозможные запросы, представленные на jsonplaceholder.typicode.com/
-     * Например: /albums, /albums/1/photos
+     * Например: /posts, /posts/1/comments
      */
-    @PostMapping(value = {"", "/{albumId}/photos"})
+    @PostMapping(value = {"", "/{postId}/comments"})
     public ResponseEntity<String> post(HttpServletRequest httpServletRequest, @RequestBody Object body) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 requestClient.post(buildURI(httpServletRequest), body)
@@ -51,11 +51,11 @@ public class AlbumController {
     }
 
     /**
-     * Обработка PUT-запросов к /albums/**
+     * Обработка PUT-запросов к /posts/**
      * Поддерживаются всевозможные запросы, представленные на jsonplaceholder.typicode.com/
-     * Например: /albums/1
+     * Например: /posts/1
      */
-    @PutMapping(value = "/{albumId}")
+    @PutMapping(value = "/{postId}")
     public ResponseEntity<String> put(HttpServletRequest httpServletRequest, @RequestBody Object body) {
         return ResponseEntity.ok(
                 requestClient.put(buildURI(httpServletRequest), body)
@@ -63,11 +63,11 @@ public class AlbumController {
     }
 
     /**
-     * Обработка PATCH-запросов к /albums/**
+     * Обработка PATCH-запросов к /posts/**
      * Поддерживаются всевозможные запросы, представленные на jsonplaceholder.typicode.com/
-     * Например: /albums/1
+     * Например: /posts/1
      */
-    @PatchMapping(value = "/{albumId}")
+    @PatchMapping(value = "/{postId}")
     public ResponseEntity<String> patch(HttpServletRequest httpServletRequest, @RequestBody Object body) {
         return ResponseEntity.ok(
                 requestClient.patch(buildURI(httpServletRequest), body)
@@ -75,15 +75,14 @@ public class AlbumController {
     }
 
     /**
-     * Обработка DELETE-запросов к /albums/**
+     * Обработка DELETE-запросов к /posts/**
      * Поддерживаются всевозможные запросы, представленные на jsonplaceholder.typicode.com/
-     * Например: /albums/1
+     * Например: /posts/1
      */
-    @DeleteMapping(value = {"/{albumId}", "/{albumId}/photos/{photoId}"})
+    @DeleteMapping(value = "/{postId}")
     public ResponseEntity<Void> delete(HttpServletRequest httpServletRequest) {
         requestClient.delete(buildURI(httpServletRequest));
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 
 }

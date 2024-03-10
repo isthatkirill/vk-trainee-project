@@ -22,22 +22,27 @@ public class UserSecurityExpression {
 
     public boolean checkAccessToUsersAndSave(HttpServletRequest httpServletRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAllowed = isHaveUsersRole(authentication) || isHaveAdminRole(authentication);
-        String username = extractUsername(authentication);
-        requestService.saveRequest(httpServletRequest, isAllowed, username);
+        boolean isAllowed = isHaveGivenRole(authentication, Role.ROLE_USERS) || isHaveGivenRole(authentication, Role.ROLE_ADMIN);
+        requestService.saveRequest(httpServletRequest, isAllowed, extractUsername(authentication));
         return isAllowed;
     }
 
     public boolean checkAccessToAlbumsAndSave(HttpServletRequest httpServletRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAllowed = isHaveAlbumsRole(authentication) || isHaveAdminRole(authentication);
-        String username = extractUsername(authentication);
-        requestService.saveRequest(httpServletRequest, isAllowed, username);
+        boolean isAllowed = isHaveGivenRole(authentication, Role.ROLE_ALBUMS) || isHaveGivenRole(authentication, Role.ROLE_ADMIN);
+        requestService.saveRequest(httpServletRequest, isAllowed, extractUsername(authentication));
         return isAllowed;
     }
 
-    private boolean isHaveAlbumsRole(Authentication authentication) {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(Role.ROLE_ALBUMS.name());
+    public boolean checkAccessToPostsAndSave(HttpServletRequest httpServletRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAllowed = isHaveGivenRole(authentication, Role.ROLE_POSTS) || isHaveGivenRole(authentication, Role.ROLE_ADMIN);
+        requestService.saveRequest(httpServletRequest, isAllowed, extractUsername(authentication));
+        return isAllowed;
+    }
+
+    private boolean isHaveGivenRole(Authentication authentication, Role role) {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
         return authentication.getAuthorities().contains(authority);
     }
 
@@ -45,16 +50,5 @@ public class UserSecurityExpression {
         User user = (User) authentication.getPrincipal();
         return user.getUsername();
     }
-
-    private boolean isHaveUsersRole(Authentication authentication) {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(Role.ROLE_USERS.name());
-        return authentication.getAuthorities().contains(authority);
-    }
-
-    private boolean isHaveAdminRole(Authentication authentication) {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(Role.ROLE_ADMIN.name());
-        return authentication.getAuthorities().contains(authority);
-    }
-
 
 }
