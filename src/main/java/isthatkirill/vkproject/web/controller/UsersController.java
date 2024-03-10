@@ -1,6 +1,6 @@
-package isthatkirill.vkproject.api.controller;
+package isthatkirill.vkproject.web.controller;
 
-import isthatkirill.vkproject.api.client.RequestClient;
+import isthatkirill.vkproject.web.client.RequestClient;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-import static isthatkirill.vkproject.util.PathBuilder.*;
+import static isthatkirill.vkproject.util.PathBuilder.buildURI;
 
 /**
  * @author Kirill Emelyanov

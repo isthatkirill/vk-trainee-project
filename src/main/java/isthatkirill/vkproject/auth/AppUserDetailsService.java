@@ -1,8 +1,8 @@
 package isthatkirill.vkproject.auth;
 
-import isthatkirill.vkproject.user.model.AppUser;
-import isthatkirill.vkproject.user.model.Role;
-import isthatkirill.vkproject.user.repository.AppUserRepository;
+import isthatkirill.vkproject.web.user.model.AppUser;
+import isthatkirill.vkproject.web.user.model.Role;
+import isthatkirill.vkproject.web.user.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

@@ -1,11 +1,11 @@
-package isthatkirill.vkproject.api.service.impl;
+package isthatkirill.vkproject.web.service.impl;
 
-import isthatkirill.vkproject.api.model.Request;
-import isthatkirill.vkproject.api.repository.RequestRepository;
-import isthatkirill.vkproject.api.service.RequestService;
 import isthatkirill.vkproject.error.exception.EntityNotFoundException;
-import isthatkirill.vkproject.user.model.AppUser;
-import isthatkirill.vkproject.user.repository.AppUserRepository;
+import isthatkirill.vkproject.web.model.Request;
+import isthatkirill.vkproject.web.repository.RequestRepository;
+import isthatkirill.vkproject.web.service.RequestService;
+import isthatkirill.vkproject.web.user.model.AppUser;
+import isthatkirill.vkproject.web.user.repository.AppUserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

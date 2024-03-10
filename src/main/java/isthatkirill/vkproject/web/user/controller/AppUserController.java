@@ -1,9 +1,9 @@
-package isthatkirill.vkproject.user.controller;
+package isthatkirill.vkproject.web.user.controller;
 
-import isthatkirill.vkproject.user.dto.AppUserDtoRequest;
-import isthatkirill.vkproject.user.dto.AppUserDtoResponse;
-import isthatkirill.vkproject.user.model.Role;
-import isthatkirill.vkproject.user.service.AppUserService;
+import isthatkirill.vkproject.web.user.dto.AppUserDtoRequest;
+import isthatkirill.vkproject.web.user.dto.AppUserDtoResponse;
+import isthatkirill.vkproject.web.user.model.Role;
+import isthatkirill.vkproject.web.user.service.AppUserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class AppUserController {
     @PostMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AppUserDtoResponse> changeUserRoles(@RequestParam Long userId,
-                                                             @RequestBody @NotNull List<Role> roles) {
+                                                              @RequestBody @NotNull List<Role> roles) {
         return ResponseEntity.ok(appUserService.changeUserRoles(userId, roles));
     }
 

@@ -1,6 +1,6 @@
-package isthatkirill.vkproject.api.model;
+package isthatkirill.vkproject.web.model;
 
-import isthatkirill.vkproject.user.model.AppUser;
+import isthatkirill.vkproject.web.user.model.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

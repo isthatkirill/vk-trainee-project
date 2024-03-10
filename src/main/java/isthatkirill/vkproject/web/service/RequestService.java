@@ -1,6 +1,5 @@
-package isthatkirill.vkproject.api.service;
+package isthatkirill.vkproject.web.service;
 
-import isthatkirill.vkproject.user.model.AppUser;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**

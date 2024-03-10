@@ -1,6 +1,6 @@
-package isthatkirill.vkproject.api.repository;
+package isthatkirill.vkproject.web.repository;
 
-import isthatkirill.vkproject.api.model.Request;
+import isthatkirill.vkproject.web.model.Request;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

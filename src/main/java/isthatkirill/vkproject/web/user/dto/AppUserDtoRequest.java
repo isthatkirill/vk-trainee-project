@@ -1,4 +1,4 @@
-package isthatkirill.vkproject.user.dto;
+package isthatkirill.vkproject.web.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

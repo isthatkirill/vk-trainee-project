@@ -1,4 +1,4 @@
-package isthatkirill.vkproject.api.client;
+package isthatkirill.vkproject.web.client;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +47,6 @@ public class RequestClient {
                 .bodyToMono(String.class)
                 .block();
     }
-
 
 
     public String put(String path, Object body) {

@@ -1,6 +1,6 @@
-package isthatkirill.vkproject.user.dto;
+package isthatkirill.vkproject.web.user.dto;
 
-import isthatkirill.vkproject.user.model.Role;
+import isthatkirill.vkproject.web.user.model.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;

@@ -1,16 +1,17 @@
-package isthatkirill.vkproject.user.service.impl;
+package isthatkirill.vkproject.web.user.service.impl;
 
 import isthatkirill.vkproject.error.exception.EntityNotFoundException;
 import isthatkirill.vkproject.error.exception.NotUniqueException;
-import isthatkirill.vkproject.user.AppUserMapper;
-import isthatkirill.vkproject.user.dto.AppUserDtoRequest;
-import isthatkirill.vkproject.user.dto.AppUserDtoResponse;
-import isthatkirill.vkproject.user.model.AppUser;
-import isthatkirill.vkproject.user.model.Role;
-import isthatkirill.vkproject.user.repository.AppUserRepository;
-import isthatkirill.vkproject.user.service.AppUserService;
+import isthatkirill.vkproject.web.user.dto.AppUserDtoRequest;
+import isthatkirill.vkproject.web.user.dto.AppUserDtoResponse;
+import isthatkirill.vkproject.web.user.mapper.AppUserMapper;
+import isthatkirill.vkproject.web.user.model.AppUser;
+import isthatkirill.vkproject.web.user.model.Role;
+import isthatkirill.vkproject.web.user.repository.AppUserRepository;
+import isthatkirill.vkproject.web.user.service.AppUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     private final AppUserRepository appUserRepository;
     private final AppUserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -34,6 +36,7 @@ public class AppUserServiceImpl implements AppUserService {
         checkIfUserExists(userDtoRequest.getUsername());
         AppUser appUser = userMapper.toAppUser(userDtoRequest);
         appUser.setRoles(List.of(Role.DEFAULT));
+        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         appUser = appUserRepository.save(appUser);
         return userMapper.toAppUserDtoResponse(appUser);
     }

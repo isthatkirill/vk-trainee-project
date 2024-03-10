@@ -1,4 +1,4 @@
-package isthatkirill.vkproject.user.model;
+package isthatkirill.vkproject.web.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;

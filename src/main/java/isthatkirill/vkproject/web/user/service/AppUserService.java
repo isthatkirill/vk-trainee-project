@@ -1,8 +1,8 @@
-package isthatkirill.vkproject.user.service;
+package isthatkirill.vkproject.web.user.service;
 
-import isthatkirill.vkproject.user.dto.AppUserDtoRequest;
-import isthatkirill.vkproject.user.dto.AppUserDtoResponse;
-import isthatkirill.vkproject.user.model.Role;
+import isthatkirill.vkproject.web.user.dto.AppUserDtoRequest;
+import isthatkirill.vkproject.web.user.dto.AppUserDtoResponse;
+import isthatkirill.vkproject.web.user.model.Role;
 
 import java.util.List;
 

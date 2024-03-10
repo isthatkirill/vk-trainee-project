@@ -1,11 +1,9 @@
 package isthatkirill.vkproject.auth;
 
-import isthatkirill.vkproject.api.service.RequestService;
-import isthatkirill.vkproject.user.model.AppUser;
-import isthatkirill.vkproject.user.model.Role;
+import isthatkirill.vkproject.web.service.RequestService;
+import isthatkirill.vkproject.web.user.model.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

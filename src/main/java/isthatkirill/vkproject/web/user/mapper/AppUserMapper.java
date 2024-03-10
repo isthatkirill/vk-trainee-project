@@ -1,8 +1,8 @@
-package isthatkirill.vkproject.user;
+package isthatkirill.vkproject.web.user.mapper;
 
-import isthatkirill.vkproject.user.dto.AppUserDtoRequest;
-import isthatkirill.vkproject.user.dto.AppUserDtoResponse;
-import isthatkirill.vkproject.user.model.AppUser;
+import isthatkirill.vkproject.web.user.dto.AppUserDtoRequest;
+import isthatkirill.vkproject.web.user.dto.AppUserDtoResponse;
+import isthatkirill.vkproject.web.user.model.AppUser;
 import org.mapstruct.Mapper;
 
 /**

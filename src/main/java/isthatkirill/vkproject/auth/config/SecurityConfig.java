@@ -1,4 +1,4 @@
-package isthatkirill.vkproject.auth;
+package isthatkirill.vkproject.auth.config;
 
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {

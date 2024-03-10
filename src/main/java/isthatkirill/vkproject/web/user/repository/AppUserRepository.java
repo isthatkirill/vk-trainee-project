@@ -1,6 +1,6 @@
-package isthatkirill.vkproject.user.repository;
+package isthatkirill.vkproject.web.user.repository;
 
-import isthatkirill.vkproject.user.model.AppUser;
+import isthatkirill.vkproject.web.user.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
