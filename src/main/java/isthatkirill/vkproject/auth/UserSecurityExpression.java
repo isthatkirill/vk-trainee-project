@@ -20,12 +20,25 @@ public class UserSecurityExpression {
 
     private final RequestService requestService;
 
-    public boolean checkUsersAccessAndSave(HttpServletRequest httpServletRequest) {
+    public boolean checkAccessToUsersAndSave(HttpServletRequest httpServletRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAllowed = isHaveUsersRole(authentication) || isHaveAdminRole(authentication);
         String username = extractUsername(authentication);
         requestService.saveRequest(httpServletRequest, isAllowed, username);
         return isAllowed;
+    }
+
+    public boolean checkAccessToAlbumsAndSave(HttpServletRequest httpServletRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAllowed = isHaveAlbumsRole(authentication) || isHaveAdminRole(authentication);
+        String username = extractUsername(authentication);
+        requestService.saveRequest(httpServletRequest, isAllowed, username);
+        return isAllowed;
+    }
+
+    private boolean isHaveAlbumsRole(Authentication authentication) {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(Role.ROLE_ALBUMS.name());
+        return authentication.getAuthorities().contains(authority);
     }
 
     private String extractUsername(Authentication authentication) {
