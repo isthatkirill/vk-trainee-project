@@ -32,7 +32,7 @@ public class PostController {
     @GetMapping(value = {"", "/{postId}", "/{postId}/comments"})
     @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_POSTS_VIEWER')")
     public ResponseEntity<String> get(HttpServletRequest httpServletRequest,
-                                     @RequestParam(required = false) Map<String, String> queryParams) {
+                                      @RequestParam(required = false) Map<String, String> queryParams) {
         return ResponseEntity.ok(
                 requestClient.get(buildURI(httpServletRequest, queryParams))
         );

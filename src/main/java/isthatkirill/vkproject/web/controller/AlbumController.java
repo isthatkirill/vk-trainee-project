@@ -32,7 +32,7 @@ public class AlbumController {
     @GetMapping(value = {"", "/{albumId}", "/{albumId}/photos"})
     @PreAuthorize("@userSecurityExpression.checkPermissions(#httpServletRequest, 'ROLE_ALBUMS_VIEWER')")
     public ResponseEntity<String> get(HttpServletRequest httpServletRequest,
-                                     @RequestParam(required = false) Map<String, String> queryParams) {
+                                      @RequestParam(required = false) Map<String, String> queryParams) {
         return ResponseEntity.ok(
                 requestClient.get(buildURI(httpServletRequest, queryParams))
         );
