@@ -43,6 +43,8 @@ class AppUserServiceImplTest {
         AppUserDtoResponse persistentUser = appUserService.register(newUser);
 
         assertThat(persistentUser)
+                .hasFieldOrPropertyWithValue("username", newUser.getUsername())
+                .hasFieldOrProperty("password")
                 .hasFieldOrPropertyWithValue("id", 4L);
 
         assertThat(persistentUser.getRoles()).hasSize(1)

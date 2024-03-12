@@ -7,6 +7,7 @@ import isthatkirill.vkproject.web.user.service.AppUserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -29,7 +30,7 @@ public class AppUserController {
     /**
      * Выдача ролей пользователю. Доступно только админу.
      */
-    @PostMapping("/users")
+    @PutMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AppUserDtoResponse> changeUserRoles(@RequestParam Long userId,
                                                               @RequestBody @NotNull List<Role> roles) {
@@ -41,7 +42,8 @@ public class AppUserController {
      */
     @PostMapping("/register")
     public ResponseEntity<AppUserDtoResponse> register(@RequestBody @Valid AppUserDtoRequest userDtoRequest) {
-        return ResponseEntity.ok(appUserService.register(userDtoRequest));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(appUserService.register(userDtoRequest));
     }
 
 

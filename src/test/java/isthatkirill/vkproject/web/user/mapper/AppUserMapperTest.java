@@ -46,6 +46,8 @@ class AppUserMapperTest {
         AppUserDtoResponse appUserDtoResponse = appUserMapper.toAppUserDtoResponse(appUser);
 
         assertThat(appUserDtoResponse).isNotNull()
+                .hasFieldOrPropertyWithValue("password", appUser.getPassword())
+                .hasFieldOrPropertyWithValue("username", appUser.getUsername())
                 .hasFieldOrPropertyWithValue("id", appUser.getId())
                 .hasFieldOrPropertyWithValue("roles", appUser.getRoles());
     }
