@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: test
+      on-profile: ci, test
 
   datasource:
     url: jdbc:h2:mem:vk-project
